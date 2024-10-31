@@ -19,7 +19,7 @@ use super::{
 };
 
 /// Structure used for batch place & amend orders
-#[derive(serde_derive::Serialize)]
+#[derive(serde_derive::Serialize, Debug)]
 pub struct BatchOrderRequest {
     pub category: String,
     pub request: Vec<HashMap<String, String>>,
