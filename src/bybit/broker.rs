@@ -13,17 +13,14 @@ use serde_json::Value;
 use crate::endpoints::v5broker;
 
 use super::{
+    http_manager::{HttpManager, Manager},
     Result,
-    http_manager::{HttpManager, Manager}
 };
 
 #[async_trait]
 pub trait Broker {
     fn new(http_manager: Arc<HttpManager>) -> Self;
-    async fn get_broker_earnings(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_broker_earnings(&self, query: HashMap<String, String>) -> Result<Value>;
 }
 
 pub struct BrokerHTTP {
@@ -41,10 +38,7 @@ impl Broker for BrokerHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/broker/earning
-    async fn get_broker_earnings(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_broker_earnings(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5broker::Broker::GetBrokerEarnings.to_string();
         let result = self
             .http_manager

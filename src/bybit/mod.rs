@@ -9,6 +9,5 @@ pub mod spot_margin_trade;
 pub mod trade;
 pub mod user;
 
-
 type Error = Box<dyn std::error::Error + Send + Sync + 'static>;
 type Result<T> = std::result::Result<T, Error>;

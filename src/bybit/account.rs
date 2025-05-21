@@ -13,70 +13,37 @@ use serde_json::Value;
 use crate::endpoints::v5account;
 
 use super::{
+    http_manager::{HttpManager, Manager},
     Result,
-    http_manager::{HttpManager, Manager}
 };
 
 #[async_trait]
 pub trait Account {
     fn new(http_manager: Arc<HttpManager>) -> Self;
-    async fn get_wallet_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_wallet_balance(&self, query: HashMap<String, String>) -> Result<Value>;
 
     async fn upgrade_to_unified_trading_account(
         &self,
         query: HashMap<String, String>,
     ) -> Result<Value>;
 
-    async fn get_borrow_history(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_borrow_history(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_collateral_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_collateral_info(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_coin_greeks(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_coin_greeks(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_fee_rates(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_fee_rates(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_account_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
-    async fn get_transaction_log(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
-    async fn set_margin_mode(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_account_info(&self, query: HashMap<String, String>) -> Result<Value>;
+    async fn get_transaction_log(&self, query: HashMap<String, String>) -> Result<Value>;
+    async fn set_margin_mode(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn set_mmp(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn set_mmp(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn reset_mmp(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn reset_mmp(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_mmp_state(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_mmp_state(&self, query: HashMap<String, String>) -> Result<Value>;
 }
 
 pub struct AccountHTTP {
@@ -107,10 +74,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/wallet-balance
-    async fn get_wallet_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_wallet_balance(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetWalletBalance.to_string();
         let result = self
             .http_manager
@@ -145,10 +109,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/borrow-history
-    async fn get_borrow_history(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_borrow_history(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetBorrowHistory.to_string();
         let result = self
             .http_manager
@@ -164,10 +125,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/collateral-info
-    async fn get_collateral_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_collateral_info(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetCollateralInfo.to_string();
         let result = self
             .http_manager
@@ -183,10 +141,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/coin-greeks
-    async fn get_coin_greeks(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_coin_greeks(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetCoinGreeks.to_string();
         let result = self
             .http_manager
@@ -202,10 +157,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/fee-rate
-    async fn get_fee_rates(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_fee_rates(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetFeeRate.to_string();
         let result = self
             .http_manager
@@ -221,10 +173,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/account-info
-    async fn get_account_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_account_info(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetAccountInfo.to_string();
         let result = self
             .http_manager
@@ -240,10 +189,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/transaction-log
-    async fn get_transaction_log(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_transaction_log(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetTransactionLog.to_string();
         let result = self
             .http_manager
@@ -262,10 +208,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/set-margin-mode
-    async fn set_margin_mode(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn set_margin_mode(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::SetMarginMode.to_string();
         let result = self
             .http_manager
@@ -293,10 +236,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/set-mmp
-    async fn set_mmp(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn set_mmp(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::SetMMP.to_string();
         let result = self
             .http_manager
@@ -315,10 +255,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/reset-mmp
-    async fn reset_mmp(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn reset_mmp(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::ResetMMP.to_string();
         let result = self
             .http_manager
@@ -337,10 +274,7 @@ impl Account for AccountHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/account/get-mmp-state
-    async fn get_mmp_state(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_mmp_state(&self, query: HashMap<String, String>) -> Result<Value> {
         let endpoint = v5account::Account::GetMMPState.to_string();
         let result = self
             .http_manager

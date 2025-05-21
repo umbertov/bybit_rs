@@ -13,137 +13,65 @@ use serde_json::Value;
 use crate::endpoints::v5asset;
 
 use super::{
+    http_manager::{HttpManager, Manager},
     Result,
-    http_manager::{HttpManager, Manager}
 };
-
 
 #[async_trait]
 pub trait Asset {
     fn new(http_manager: Arc<HttpManager>) -> Self;
-    async fn get_coin_exchange_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_coin_exchange_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_option_delivery_record(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_option_delivery_record(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_usdc_contract_settlement(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_usdc_contract_settlement(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_spot_asset_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_spot_asset_info(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_coins_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_coins_balance(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_coin_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_coin_balance(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_transferable_coin(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
-    async fn create_internal_transfer(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_transferable_coin(&self, query: HashMap<String, String>) -> Result<Value>;
+    async fn create_internal_transfer(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_internal_transfer_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_internal_transfer_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_sub_uid(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_sub_uid(&self, query: HashMap<String, String>) -> Result<Value>;
 
     async fn enable_universal_transfer_for_sub_uid(
         &self,
         query: HashMap<String, String>,
     ) -> Result<Value>;
 
-    async fn create_universal_transfer(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn create_universal_transfer(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_universal_transfer_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_universal_transfer_records(&self, query: HashMap<String, String>)
+        -> Result<Value>;
 
-    async fn get_allowed_deposit_coin_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_allowed_deposit_coin_info(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn set_deposit_account(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn set_deposit_account(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_deposit_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_sub_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_sub_deposit_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_internal_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_internal_deposit_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_master_deposit_address(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_master_deposit_address(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_sub_deposit_address(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_sub_deposit_address(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_coin_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_coin_info(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_withdrawal_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_withdrawal_records(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn get_withdrawable_amount(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn get_withdrawable_amount(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn withdraw(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn withdraw(&self, query: HashMap<String, String>) -> Result<Value>;
 
-    async fn cancel_withdrawal(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value>;
+    async fn cancel_withdrawal(&self, query: HashMap<String, String>) -> Result<Value>;
 }
 
 pub struct AssetHTTP {
@@ -168,10 +96,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/exchange
-    async fn get_coin_exchange_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_coin_exchange_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -192,10 +117,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/option-delivery
-    async fn get_option_delivery_record(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_option_delivery_record(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -216,10 +138,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/settlement
-    async fn get_usdc_contract_settlement(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_usdc_contract_settlement(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -240,10 +159,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/asset-info
-    async fn get_spot_asset_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_spot_asset_info(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -265,10 +181,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/all-balance
-    async fn get_coins_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_coins_balance(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -289,10 +202,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/account-coin-balance
-    async fn get_coin_balance(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_coin_balance(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -314,10 +224,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/transferable-coin
-    async fn get_transferable_coin(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_transferable_coin(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -342,10 +249,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/create-inter-transfer
-    async fn create_internal_transfer(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn create_internal_transfer(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -363,10 +267,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/inter-transfer-list
-    async fn get_internal_transfer_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_internal_transfer_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -384,10 +285,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/sub-uid-list
-    async fn get_sub_uid(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_sub_uid(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -438,10 +336,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/unitransfer
-    async fn create_universal_transfer(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn create_universal_transfer(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -480,10 +375,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/deposit-coin-spec
-    async fn get_allowed_deposit_coin_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_allowed_deposit_coin_info(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -505,10 +397,7 @@ impl Asset for AssetHTTP {
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/set-deposit-acct
 
-    async fn set_deposit_account(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn set_deposit_account(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -526,10 +415,7 @@ impl Asset for AssetHTTP {
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/deposit-record
 
-    async fn get_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_deposit_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -550,10 +436,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/sub-deposit-record
-    async fn get_sub_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_sub_deposit_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -571,10 +454,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/internal-deposit-record
-    async fn get_internal_deposit_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_internal_deposit_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -595,10 +475,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/master-deposit-addr
-    async fn get_master_deposit_address(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_master_deposit_address(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -620,10 +497,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/sub-deposit-addr
-    async fn get_sub_deposit_address(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_sub_deposit_address(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -641,10 +515,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/coin-info
-    async fn get_coin_info(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_coin_info(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -662,10 +533,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/withdraw-record
-    async fn get_withdrawal_records(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_withdrawal_records(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -685,10 +553,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/delay-amount
-    async fn get_withdrawable_amount(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn get_withdrawable_amount(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_request(
                 Method::GET,
@@ -714,10 +579,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/withdraw
-    async fn withdraw(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn withdraw(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
@@ -738,10 +600,7 @@ impl Asset for AssetHTTP {
 
     ///     Additional information:
     ///         https://bybit-exchange.github.io/docs/v5/asset/cancel-withdraw
-    async fn cancel_withdrawal(
-        &self,
-        query: HashMap<String, String>,
-    ) -> Result<Value> {
+    async fn cancel_withdrawal(&self, query: HashMap<String, String>) -> Result<Value> {
         self.http_manager
             .submit_post_request(
                 Method::POST,
