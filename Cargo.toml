@@ -34,11 +34,9 @@ serde_derive = "*"
 
 
 #Request
-reqwest = { version = "*", features = [
+reqwest = { version = "*", default-features = false, features = [
     "json",
-    "default",
-    "socks",
-    "blocking",
+    # "blocking",
     "stream",
     "rustls-tls",
 ] }

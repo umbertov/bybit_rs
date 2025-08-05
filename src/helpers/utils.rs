@@ -1,7 +1,4 @@
 use hmac::{Hmac, Mac};
-use openssl::hash::{hash, MessageDigest};
-use openssl::pkey::PKey;
-use openssl::sign::Signer;
 use reqwest::header::{HeaderMap, HeaderValue, CONTENT_TYPE};
 use sha2::Sha256;
 use std::collections::{BTreeMap, HashMap};
